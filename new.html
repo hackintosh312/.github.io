@@ -1,2 +1,283 @@
-<!DOCTYPE Html>
-<html><head><title>Hướng dẫn Hackintosh</title></head></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OpenCore config.plist Sanity Checker</title>
+  <meta content="Sanity check your OpenCore config.plist" name="description">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/magula.min.css" />
+  <link rel="stylesheet" href="main.css?version=1.9" type="text/css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+<a href="/"><img src="oclogo.png" class="logo" alt="OC Sanity Check" width="128"></a>
+<br>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-8">
+      <form action="upload.php" enctype="multipart/form-data" class="dropzone" id="file-upload">
+        <h2>OpenCore Sanity Checker</h2>
+        <h5>Choose CPU Architecture and OpenCore Version</h3>
+        <br>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="input-group mb-7">
+              <div class="input-group-prepend"><label class="input-group-text" for="selectarch">CPU</label></div>
+              <select class="form-control" name="selectarch" id="selectarch">
+                <option value="amdfx">AMD FX</option>
+<option value="amd" selected>AMD Zen</option>
+<option value="clarkdale">Desktop: (1st Gen) Lynnfield and Clarkdale</option>
+<option value="sandybridge">Desktop: (2rd Gen) Sandy Bridge</option>
+<option value="ivybridge">Desktop: (3rd Gen) Ivy Bridge</option>
+<option value="haswell">Desktop: (4th Gen) Haswell</option>
+<option value="skylake">Desktop: (6th Gen) SkyLake</option>
+<option value="kabylake">Desktop: (7th Gen) Kaby Lake</option>
+<option value="coffeelake">Desktop: (8th, 9th Gen) Coffee Lake</option>
+<option value="cometlake">Desktop: (10th Gen) Comet Lake</option>
+<option value="nehalem">HEDT: (1st, 2nd Gen) Nehalem</option>
+<option value="ivybridgee">HEDT: (3rd, 4th Gen) Sandy and Ivy Bridge-E</option>
+<option value="haswelle">HEDT: (5th Gen) Haswell-E</option>
+<option value="broadwelle">HEDT: (6th Gen) Broadwell-E</option>
+<option value="skylakex">HEDT: (7th, 9th, 10th Gen) SkyLake-X</option>
+<option value="laptoparrandale">Laptop: (1st Gen) Clarksfield and Arrandale</option>
+<option value="laptopsandybridge">Laptop: (2rd Gen) Sandy Bridge</option>
+<option value="laptopivybridge">Laptop: (3rd Gen) Ivy Bridge</option>
+<option value="laptophaswell">Laptop: (4th Gen) Haswell</option>
+<option value="laptopbroadwell">Laptop: (5th Gen) Broadwell</option>
+<option value="laptopskylake">Laptop: (6th Gen) SkyLake</option>
+<option value="laptopkabylake">Laptop: (7th Gen) Kaby Lake</option>
+<option value="laptopcoffeelake">Laptop: (8th Gen) Coffee Lake</option>
+<option value="laptopcoffeelakeplus">Laptop: (9th, 10th Gen) Coffee and Comet Lake Plus</option>
+<option value="laptopicelake">Laptop: (10th Gen) Ice Lake</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend"><label class="input-group-text" for="selectver">Version</label></div>
+              <select class="form-control" name="selectver" id="selectver">
+                <option value="amdfx">0.5.7</option>
+<option value="amdfx">0.5.8</option>
+<option value="amdfx">0.5.9</option>
+<option value="amdfx">0.6.0</option>
+<option value="amdfx">0.6.1</option>
+<option value="amdfx" selected>0.6.2</option>
+<option value="amd">0.5.5</option>
+<option value="amd">0.5.6</option>
+<option value="amd">0.5.7</option>
+<option value="amd">0.5.8</option>
+<option value="amd">0.5.9</option>
+<option value="amd">0.6.0</option>
+<option value="amd">0.6.1</option>
+<option value="amd" selected>0.6.2</option>
+<option value="clarkdale" selected>0.6.2</option>
+<option value="sandybridge">0.6.1</option>
+<option value="sandybridge" selected>0.6.2</option>
+<option value="ivybridge">0.5.5</option>
+<option value="ivybridge">0.5.6</option>
+<option value="ivybridge">0.5.7</option>
+<option value="ivybridge">0.5.8</option>
+<option value="ivybridge">0.5.9</option>
+<option value="ivybridge">0.6.0</option>
+<option value="ivybridge">0.6.1</option>
+<option value="ivybridge" selected>0.6.2</option>
+<option value="haswell">0.5.5</option>
+<option value="haswell">0.5.6</option>
+<option value="haswell">0.5.7</option>
+<option value="haswell">0.5.8</option>
+<option value="haswell">0.5.9</option>
+<option value="haswell">0.6.0</option>
+<option value="haswell">0.6.1</option>
+<option value="haswell" selected>0.6.2</option>
+<option value="skylake">0.5.5</option>
+<option value="skylake">0.5.6</option>
+<option value="skylake">0.5.7</option>
+<option value="skylake">0.5.8</option>
+<option value="skylake">0.5.9</option>
+<option value="skylake">0.6.0</option>
+<option value="skylake">0.6.1</option>
+<option value="skylake" selected>0.6.2</option>
+<option value="kabylake">0.5.5</option>
+<option value="kabylake">0.5.6</option>
+<option value="kabylake">0.5.7</option>
+<option value="kabylake">0.5.8</option>
+<option value="kabylake">0.5.9</option>
+<option value="kabylake">0.6.0</option>
+<option value="kabylake">0.6.1</option>
+<option value="kabylake" selected>0.6.2</option>
+<option value="coffeelake">0.5.5</option>
+<option value="coffeelake">0.5.6</option>
+<option value="coffeelake">0.5.7</option>
+<option value="coffeelake">0.5.8</option>
+<option value="coffeelake">0.5.9</option>
+<option value="coffeelake">0.6.0</option>
+<option value="coffeelake">0.6.1</option>
+<option value="coffeelake" selected>0.6.2</option>
+<option value="cometlake">0.6.0</option>
+<option value="cometlake">0.6.1</option>
+<option value="cometlake" selected>0.6.2</option>
+<option value="nehalem" selected>0.6.2</option>
+<option value="ivybridgee" selected>0.6.2</option>
+<option value="ivybridgee">0.6.1</option>
+<option value="haswelle">0.5.5</option>
+<option value="haswelle">0.5.6</option>
+<option value="haswelle">0.5.7</option>
+<option value="haswelle">0.5.8</option>
+<option value="haswelle">0.5.9</option>
+<option value="haswelle">0.6.0</option>
+<option value="haswelle">0.6.1</option>
+<option value="haswelle" selected>0.6.2</option>
+<option value="broadwelle">0.5.5</option>
+<option value="broadwelle">0.5.6</option>
+<option value="broadwelle">0.5.7</option>
+<option value="broadwelle">0.5.8</option>
+<option value="broadwelle">0.5.9</option>
+<option value="broadwelle">0.6.0</option>
+<option value="broadwelle">0.6.1</option>
+<option value="broadwelle" selected>0.6.2</option>
+<option value="skylakex">0.5.5</option>
+<option value="skylakex">0.5.6</option>
+<option value="skylakex">0.5.7</option>
+<option value="skylakex">0.5.8</option>
+<option value="skylakex">0.5.9</option>
+<option value="skylakex">0.6.0</option>
+<option value="skylakex">0.6.1</option>
+<option value="skylakex" selected>0.6.2</option>
+<option value="laptoparrandale" selected>0.6.2</option>
+<option value="laptopsandybridge">0.6.1</option>
+<option value="laptopsandybridge" selected>0.6.2</option>
+<option value="laptopivybridge">0.6.0</option>
+<option value="laptopivybridge">0.6.1</option>
+<option value="laptopivybridge" selected>0.6.2</option>
+<option value="laptophaswell">0.6.0</option>
+<option value="laptophaswell">0.6.1</option>
+<option value="laptophaswell" selected>0.6.2</option>
+<option value="laptopbroadwell">0.6.0</option>
+<option value="laptopbroadwell">0.6.1</option>
+<option value="laptopbroadwell" selected>0.6.2</option>
+<option value="laptopskylake">0.6.0</option>
+<option value="laptopskylake">0.6.1</option>
+<option value="laptopskylake" selected>0.6.2</option>
+<option value="laptopkabylake">0.6.0</option>
+<option value="laptopkabylake">0.6.1</option>
+<option value="laptopkabylake" selected>0.6.2</option>
+<option value="laptopcoffeelake">0.6.0</option>
+<option value="laptopcoffeelake">0.6.1</option>
+<option value="laptopcoffeelake" selected>0.6.2</option>
+<option value="laptopcoffeelakeplus">0.6.0</option>
+<option value="laptopcoffeelakeplus">0.6.1</option>
+<option value="laptopcoffeelakeplus" selected>0.6.2</option>
+<option value="laptopicelake">0.6.0</option>
+<option value="laptopicelake">0.6.1</option>
+<option value="laptopicelake" selected>0.6.2</option>
+              </select>
+            </div>
+          </div>
+          <input type="hidden" name="ruleset" id="ruleset" value="">
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4 recent">
+      <h3>Recent Checks</h3>
+      <hr>
+      <a href="/?file=laptopskylake062kC8pbY&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:12:27+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062gkjS8l&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:12:03+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopskylake062uzFfEz&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:11:57+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopskylake062UY8RS2&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:11:26+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopkabylake0627j11U2&rs=laptopkabylake062"\>Laptop: (7th Gen) Kaby Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:11:16+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopskylake062QaIKSk&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:10:38+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062AShPrL&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:09:50+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopskylake062QPakqN&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:08:17+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062gB3AIO&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:07:56+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=haswell062IZZKzM&rs=haswell062"\>Desktop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:07:26+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake0622Qx0Rc&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:06:06+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=haswell062igYEL3&rs=haswell062"\>Desktop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:05:40+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062R5Uh3R&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:04:37+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptophaswell062Q3vhr3&rs=laptophaswell062"\>Laptop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:04:01+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelake062uduS1A&rs=laptopcoffeelake062"\>Laptop: (8th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:03:43+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake0622sxZnk&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:03:16+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=cometlake062vVv9bQ&rs=cometlake062"\>Desktop: (10th Gen) Comet Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:02:59+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062Mwx0i7&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:01:51+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake0622nn580&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T12:01:40+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062YD0uru&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:59:42+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062cF1VYX&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:58:51+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelakeplus062OnOD78&rs=laptopcoffeelakeplus062"\>Laptop: (9th, 10th Gen) Coffee and Comet Lake Plus OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:57:17+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=cometlake062sj6YVz&rs=cometlake062"\>Desktop: (10th Gen) Comet Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:56:27+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062nu3lZ5&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:55:57+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062SdJkte&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:55:43+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelake062MyJgf3&rs=laptopcoffeelake062"\>Laptop: (8th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:55:33+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062q4txn8&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:54:41+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelake0620cg5pv&rs=laptopcoffeelake062"\>Laptop: (8th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:54:39+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=haswell062LeF3Ug&rs=haswell062"\>Desktop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:54:34+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake0620qob0C&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:53:32+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062v7UQSv&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:53:25+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062y8WQ3i&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:53:17+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062E1fXCp&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:52:04+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062cZao6d&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:51:33+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelakeplus062zU53Mk&rs=laptopcoffeelakeplus062"\>Laptop: (9th, 10th Gen) Coffee and Comet Lake Plus OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:50:47+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd062bJsjzJ&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:48:51+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=haswell062UIX5Uk&rs=haswell062"\>Desktop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:47:44+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062usgyAT&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:47:00+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=amd0620gopmS&rs=amd062"\>AMD Zen OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:46:42+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=skylake062uKs6jA&rs=skylake062"\>Desktop: (6th Gen) Skylake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:46:23+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopcoffeelakeplus062gdvXea&rs=laptopcoffeelakeplus062"\>Laptop: (9th, 10th Gen) Coffee and Comet Lake Plus OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:46:16+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptophaswell062m517FJ&rs=laptophaswell062"\>Laptop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:45:26+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=coffeelake062sUkbWY&rs=coffeelake062"\>Desktop: (8th, 9th Gen) Coffee Lake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:43:47+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopskylake0624PwjAW&rs=laptopskylake062"\>Laptop: (6th Gen) SkyLake OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:43:35+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=laptopbroadwell062mh4Sh9&rs=laptopbroadwell062"\>Laptop: (5th Gen) Broadwell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:43:27+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<a href="/?file=haswell062HbBRoY&rs=haswell062"\>Desktop: (4th Gen) Haswell OpenCore 0.6.2 (<time class="timeago" datetime="2020-10-31T11:42:30+00:00">Sat, 31 Oct 2020 12:12:28 +0000</time>)</a><br>
+<br>
+    </div>
+      </div>
+</div>
+
+<script type="text/javascript">
+  jQuery("time.timeago").timeago();
+  var $select1 = $('#selectarch'), $select2 = $('#selectver'), $options = $select2.find('option');
+  var $defaultval = '0.6.2';
+  $select1.on('change', function() {
+	 $select2.html($options.filter('[value="' + this.value + '"]'));
+     $('#selectver option:contains(' + $defaultval + ')').prop({selected: true});
+     $('#ruleset').val($('#selectver').val()+$('#selectver option:selected').text().replace(/\./g, ''));
+  } ).trigger('change');
+  $select2.on('change', function() {
+     $('#ruleset').val($('#selectver').val()+$('#selectver option:selected').text().replace(/\./g, ''));
+  } ).trigger('change');
+
+  Dropzone.options.fileUpload = {
+  dictDefaultMessage: "<hr><div class=\"clickhere\">Then click here to choose<br>your config.plist or drag it here</div>",
+    maxFilesize:1,
+    acceptedFiles: ".plist",
+    success: function(file, response) {
+                 var $short = $('#selectver').val()+$('#selectver option:selected').text().replace(/\./g, '');
+                 window.location.replace("/?file="+response.file+"&rs="+$short);
+             }
+  };
+
+  hljs.initHighlightingOnLoad();
+
+  $('#viewA').on('click', function(event) {
+      $('#resultview').toggle();
+      $('#xmlview').toggle();
+  });
+
+  $('#viewB').on('click', function(event) {
+      $('#resultview').toggle();
+      $('#xmlview').toggle();
+  });
+</script>
+
+</body>
+</html>
+
